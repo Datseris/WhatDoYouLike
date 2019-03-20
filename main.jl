@@ -1,8 +1,8 @@
 ###########################################################################
 # Configuration
 ###########################################################################
-D = 2 # pair length to decide from
-final = 3 # I want to have approximatelly 3 ideas in the end
+D = 2     # choice size to decide from
+final = 3 # approximately how many ideas to remain in the end
 
 
 ###########################################################################
@@ -11,23 +11,20 @@ final = 3 # I want to have approximatelly 3 ideas in the end
 include("tools.jl")
 using Pkg
 Pkg.activate(@__DIR__)
-using Statistics, BSON, DelimitedFiles, Random
+using BSON, DelimitedFiles, Random
 using REPL.TerminalMenus
 
 function main(D, final)
 
     ideas = sort!(vec(readdlm("ideas.txt", '\n', String)))
     N = length(ideas)
-
     rounds = round(Int, log(D, N/final))
-
     remaining = copy(ideas)
-    original_idxs = collect(1:N)
 
     for r in 1:rounds
         println("Round n. $r. Choose your ideas...")
-        rp = randperm(length(remaining))
         RN = length(remaining)
+        rp = randperm(RN)
         todel = Int[]
         c = 0
         while c < RN
