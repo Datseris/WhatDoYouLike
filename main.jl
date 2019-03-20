@@ -19,7 +19,7 @@ function main(D, final)
     ideas = sort!(vec(readdlm("ideas.txt", '\n', String)))
     N = length(ideas)
 
-    rounds = round(Int, log2(N/3))
+    rounds = round(Int, log(D, N/final))
 
     remaining = copy(ideas)
     original_idxs = collect(1:N)
